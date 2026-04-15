@@ -13,15 +13,15 @@ GNS (Genesis Omnipotent Core) is a next-generation computing architecture that *
 
 ## 🧬 Proof of Concept: Bare-Metal Code
 Unlike theoretical projects, GNS is physically interacting with hardware. Here is how GNS outputs raw 16-bit instructions to the ATA disk bypassing any OS drivers:
-```cpp
-// From gns_compiler_core.cpp (Inline Assembly generation)
+
+<pre><code>// From gns_compiler_core.cpp (Inline Assembly generation)
 llvm::FunctionType* OutwFTy = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::Type::getInt16Ty(*TheContext), llvm::Type::getInt16Ty(*TheContext)}, false);
 llvm::InlineAsm* OutwAsm = llvm::InlineAsm::get(OutwFTy, "outw %ax, %dx", "{dx},{ax},~{dirflag},~{fpsr},~{flags}", true);
-Builder->CreateCall(OutwAsm, {Port, Val});
+Builder->CreateCall(OutwAsm, {Port, Val});</code></pre>
 
-📜 Technical Paper & 103 Physical Logic API Slots
-​Read the full architectural breakdown, including the core-level definition of the 103 Physical Logic APIs (spanning Earth infrastructure to Self-replicating Space architectures), and verified evidence on Zenodo:
-https://doi.org/10.5281/zenodo.19596733
+## 📜 Technical Paper & 103 Physical Logic API Slots
+Read the full architectural breakdown, including the core-level definition of the 103 Physical Logic APIs (spanning Earth infrastructure to Self-replicating Space architectures), and verified evidence on Zenodo: 
+[https://doi.org/10.5281/zenodo.19596733](https://doi.org/10.5281/zenodo.19596733)
 
 ---
 *I do not seek understanding. This is a definitive milestone toward actualizing real code. The goal remains unchanged. I am merely recording the facts.*
