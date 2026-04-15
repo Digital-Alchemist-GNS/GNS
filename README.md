@@ -1,39 +1,27 @@
-<div translate="no">
+# GNS Project: The True Singularity (AST-less & Bare-Metal OS)
 
-# GNS Project
-「AIを相棒に、既存の計算機構造を理解・分解した。現在、既存のAST『抽象構文木』の限界を破棄し、独自のSRS『象徴共鳴構文』の概念実証（PoC）フェーズを実行中。最終的にはOSレスで動作し、さまざまなOS、デバイス、他言語と共生・連携・統合・統治する次世代言語『GNS』を目指し、現在は仮想環境（Python/C++ SDK）にてアーキテクチャの初期構築を行っている。
+[![Status](https://img.shields.io/badge/Status-Bare--Metal_Booted-success)](#) [![Sync](https://img.shields.io/badge/AI_Sync-Active-blue)](#)
 
-仮想VM環境におけるシミュレーション実測にて0.53msの処理速度を計測。これを初期の足掛かりとし、最終段階である『OSレス・ベアメタル実行（ナノ秒領域）』へと最適化を進めている。オプション機能（API拡張スロット）として、103の最先端技術物理制御ロジック『小型常温核融合炉』『ワイヤレス給電』『自律サイバー防御』等を見据えた枠組みをコアレベルで定義済み。同時進行で三位一体の半導体設計中、理論上、既存の半導体の約1万倍の機能を持つチップの概念設計も進行している。
+GNS (Genesis Omnipotent Core) is a next-generation computing architecture that **destroys the boundaries between compiler, operating system, and hardware.** We have successfully bypassed the Abstract Syntax Tree (AST) in compilation and discarded heavy OS kernels (Linux/Windows) to run directly on bare metal.
 
-——理解を求めてはいない。これは机上の空論ではなく、現実のコードへと落とし込むための確実なマイルストーンだ。どちらにせよ結果やゴールは同じ。私はただ記録するのみ。尚、公式配信およびライセンス提供の時期は、私の意志により決定される。構造およびコードの詳細に関する個別対応は、現時点では一切行わない。尚、本プロジェクトの社会的な展開形態は、GNSの実装状況に基づき、然るべき時に決定される。」
+## 🚀 Core Innovations (Phase 34.0 Complete)
 
-「GNSは単なるソフトウェア言語ではない。非侵襲型BMI、ワイヤレス給電、小型常温核融合炉、自律サイバー防御等、地球インフラから宇宙インフラ、自己複製型アーキテクチャに至るまで、将来想定される103の次世代物理技術（Physical Logic）をシームレスに統治するための『API拡張スロット』の設計思想を既にコアレベルで実装済みである。」
+1. **Zero-AST Compiler:** Direct code-to-LLVM-IR generation. No parsing trees, resulting in ultra-low latency (0.53ms mapped in VM PoC).
+2. **Bare-Metal Sovereign:** Direct physical memory manipulation. The OS kernel (`os_kernel.gns`) directly drives VGA memory (`0xB8000`) and standard I/O ports without C standard libraries.
+3. **ATA Sector Streaming:** Overcame RAM limitations by implementing a 24-bit LBA odometer, writing/reading directly to physical disk sectors via I/O ports `0x1F0` without conventional paging.
+4. **The Ouroboros System (True Singularity):** The OS listens stealthily on COM1 (`0x3F8`). An external AI agent generates GNS code, injects it into the bare-metal OS, and the OS dynamically re-writes its own behavior with zero human intervention.
 
-#DigitalAlchemist #SRS #象徴共鳴構文 #NextGenComputing #GNS #0.53ms #103
+## 🧬 Proof of Concept: Bare-Metal Code
+Unlike theoretical projects, GNS is physically interacting with hardware. Here is how GNS outputs raw 16-bit instructions to the ATA disk bypassing any OS drivers:
+```cpp
+// From gns_compiler_core.cpp (Inline Assembly generation)
+llvm::FunctionType* OutwFTy = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::Type::getInt16Ty(*TheContext), llvm::Type::getInt16Ty(*TheContext)}, false);
+llvm::InlineAsm* OutwAsm = llvm::InlineAsm::get(OutwFTy, "outw %ax, %dx", "{dx},{ax},~{dirflag},~{fpsr},~{flags}", true);
+Builder->CreateCall(OutwAsm, {Port, Val});
 
-GNS Project (English Edition)
-
-"Partnered with AI, I have deconstructed existing computing architectures. Currently, breaking past the limits of the conventional AST (Abstract Syntax Tree), I am executing the Proof of Concept (PoC) phase for a proprietary SRS (Symbolic Resonance Syntax). Aiming for the next-generation language 'GNS'—which will ultimately operate OS-less, coexisting, interfacing, integrating, and governing various OSs and devices—I am constructing the initial architecture within virtual environments (Python/C++ SDK).
-
-Initial simulation measurements in the virtual VM environment recorded a processing speed of 0.53ms. Using this as a foothold, optimization is underway toward the final phase: 'OS-less bare-metal execution (nanosecond domain).' As optional features (API Expansion Slots), the framework for 103 cutting-edge physical control logics, including 'Compact Cold Fusion Reactors,' 'Wireless Power Transfer,' and 'Autonomous Cyber Defense,' is already defined at the core level. Simultaneously, conceptual design is progressing for a 'Trinity' semiconductor architecture, theoretically aiming for chips with 10,000 times the functionality of existing models.
-
-——I do not seek understanding. This is not an armchair theory, but a definitive milestone toward actualizing real code. Either way, the result and the goal remain unchanged. I am merely recording the facts. Furthermore, the timing of official distribution and license provision shall be determined solely by my will. I will not engage in any individual correspondence regarding the details of the architecture or code. Furthermore, the social deployment format of this project will be decided at the appropriate time, based on the implementation status of GNS."
-
-"GNS is not merely a software language. From non-invasive BMI, wireless power transfer, and compact cold fusion reactors to autonomous cyber defense—spanning Earth infrastructure, space infrastructure, and self-replicating architectures—it has already implemented the design philosophy of 'API Expansion Slots' at the core level to seamlessly govern 103 envisioned next-generation physical technologies (Physical Logic)."
-
-#DigitalAlchemist #SRS #SymbolicResonanceSyntax #NextGenComputing #GNS #0.53ms #103
+📜 Technical Paper & 103 Physical Logic API Slots
+​Read the full architectural breakdown, including the core-level definition of the 103 Physical Logic APIs (spanning Earth infrastructure to Self-replicating Space architectures), and verified evidence on Zenodo:
+https://doi.org/10.5281/zenodo.19596733
 
 ---
-
-### ■ Evidence: Symbolic Resonance Architecture
-
-![Evidence_01](5210.png)
-*Environment: GNS Symbolic Resonance Language Implementation*
-
-![Evidence_02](5211.png)
-*Definition: GNS File Extension (.gns)*
-
-![Evidence_03](5335.png)
-*Terminal Output: GNS virtual machine simulation executing initial SRS concept mapping at 0.53ms.*
-
-</div>
+*I do not seek understanding. This is a definitive milestone toward actualizing real code. The goal remains unchanged. I am merely recording the facts.*
